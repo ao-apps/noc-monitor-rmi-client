@@ -1,0 +1,55 @@
+/*
+ * Copyright 2008 by AO Industries, Inc.,
+ * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
+ * All rights reserved.
+ */
+package com.aoindustries.noc.monitor.client;
+
+import com.aoindustries.noc.common.NodeSnapshot;
+import com.aoindustries.noc.common.RootNode;
+import com.aoindustries.noc.common.TreeListener;
+import java.rmi.RemoteException;
+import javax.swing.SwingUtilities;
+
+/**
+ * @author  AO Industries, Inc.
+ */
+public class RootNodeClient extends NodeClient implements RootNode {
+
+    final private RootNode wrapped;
+
+    RootNodeClient(RootNode wrapped) {
+        super(wrapped);
+        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+
+        this.wrapped = wrapped;
+    }
+
+    public void addTreeListener(TreeListener treeListener) throws RemoteException {
+        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+
+        wrapped.addTreeListener(treeListener);
+    }
+
+    public void removeTreeListener(TreeListener treeListener) throws RemoteException {
+        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+
+        wrapped.removeTreeListener(treeListener);
+    }
+
+    public NodeSnapshot getSnapshot() throws RemoteException {
+        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+
+        NodeSnapshot nodeSnapshot = wrapped.getSnapshot();
+        wrapSnapshot(nodeSnapshot);
+        return nodeSnapshot;
+    }
+
+    /**
+     * Recursively wraps the nodes of the snapshot.
+     */
+    private static void wrapSnapshot(NodeSnapshot snapshot) {
+        snapshot.setNode(NodeClient.wrap(snapshot.getNode()));
+        for(NodeSnapshot child : snapshot.getChildren()) wrapSnapshot(child);
+    }
+}
