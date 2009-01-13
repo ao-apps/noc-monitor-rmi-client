@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 by AO Industries, Inc.,
+ * Copyright 2008-2009 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
@@ -65,6 +65,13 @@ public class NodeClient implements Node {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
         return wrapped.getAlertLevel();
+    }
+
+    @Override
+    public String getAlertMessage() throws RemoteException {
+        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+
+        return wrapped.getAlertMessage();
     }
 
     @Override
