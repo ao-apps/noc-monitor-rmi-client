@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.RMIClientSocketFactory;
+import java.sql.SQLException;
 import java.util.Locale;
 import javax.swing.SwingUtilities;
 
@@ -34,7 +35,8 @@ public class MonitorClient implements Monitor {
         wrapped = (Monitor)registry.lookup("com.aoindustries.noc.monitor.server.MonitorServer");
     }
 
-    public RootNode login(Locale locale, String username, String password) throws RemoteException, IOException {
+    @Override
+    public RootNode login(Locale locale, String username, String password) throws RemoteException, IOException, SQLException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
         return new RootNodeClient(wrapped.login(locale, username, password));
