@@ -52,6 +52,7 @@ public class NodeClient implements Node {
         return Collections.unmodifiableList(localWrapped);
     }
 
+    @SuppressWarnings("unchecked")
     static Node wrap(Node node) {
         if(node instanceof SingleResultNode) return new SingleResultNodeClient((SingleResultNode)node);
         if(node instanceof TableResultNode) return new TableResultNodeClient((TableResultNode)node);

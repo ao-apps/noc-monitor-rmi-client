@@ -16,11 +16,11 @@ import javax.swing.SwingUtilities;
 /**
  * @author  AO Industries, Inc.
  */
-public class TableMultiResultNodeClient extends NodeClient implements TableMultiResultNode {
+public class TableMultiResultNodeClient<T,E extends TableMultiResult<? extends T>> extends NodeClient implements TableMultiResultNode<T,E> {
 
-    final private TableMultiResultNode wrapped;
+    final private TableMultiResultNode<T,E> wrapped;
 
-    TableMultiResultNodeClient(TableMultiResultNode wrapped) {
+    TableMultiResultNodeClient(TableMultiResultNode<T,E> wrapped) {
         super(wrapped);
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
@@ -28,14 +28,14 @@ public class TableMultiResultNodeClient extends NodeClient implements TableMulti
     }
 
     @Override
-    public void addTableMultiResultListener(TableMultiResultListener tableMultiResultListener) throws RemoteException {
+    public void addTableMultiResultListener(TableMultiResultListener<? super E> tableMultiResultListener) throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
         wrapped.addTableMultiResultListener(tableMultiResultListener);
     }
 
     @Override
-    public void removeTableMultiResultListener(TableMultiResultListener tableMultiResultListener) throws RemoteException {
+    public void removeTableMultiResultListener(TableMultiResultListener<? super E> tableMultiResultListener) throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
         wrapped.removeTableMultiResultListener(tableMultiResultListener);
@@ -49,7 +49,7 @@ public class TableMultiResultNodeClient extends NodeClient implements TableMulti
     }
 
     @Override
-    public List<? extends TableMultiResult> getResults() throws RemoteException {
+    public List<? extends E> getResults() throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
         
         return wrapped.getResults();
