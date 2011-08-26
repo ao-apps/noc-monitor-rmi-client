@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2009 by AO Industries, Inc.,
+ * Copyright 2008-2011 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
@@ -10,7 +10,6 @@ import com.aoindustries.noc.common.TableMultiResultListener;
 import com.aoindustries.noc.common.TableMultiResultNode;
 import java.rmi.RemoteException;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.SwingUtilities;
 
 /**
@@ -42,10 +41,10 @@ public class TableMultiResultNodeClient<T,E extends TableMultiResult<? extends T
     }
 
     @Override
-    public List<?> getColumnHeaders(Locale locale) throws RemoteException {
+    public List<?> getColumnHeaders() throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        return wrapped.getColumnHeaders(locale);
+        return wrapped.getColumnHeaders();
     }
 
     @Override
