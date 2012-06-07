@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2009 by AO Industries, Inc.,
+ * Copyright 2008-2012 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
@@ -15,11 +15,11 @@ import javax.swing.SwingUtilities;
 /**
  * @author  AO Industries, Inc.
  */
-public class TableMultiResultNodeClient<T,E extends TableMultiResult<? extends T>> extends NodeClient implements TableMultiResultNode<T,E> {
+public class TableMultiResultNodeClient<R extends TableMultiResult> extends NodeClient implements TableMultiResultNode<R> {
 
-    final private TableMultiResultNode<T,E> wrapped;
+    final private TableMultiResultNode<R> wrapped;
 
-    TableMultiResultNodeClient(TableMultiResultNode<T,E> wrapped) {
+    TableMultiResultNodeClient(TableMultiResultNode<R> wrapped) {
         super(wrapped);
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
@@ -27,14 +27,14 @@ public class TableMultiResultNodeClient<T,E extends TableMultiResult<? extends T
     }
 
     @Override
-    public void addTableMultiResultListener(TableMultiResultListener<? super E> tableMultiResultListener) throws RemoteException {
+    public void addTableMultiResultListener(TableMultiResultListener<? super R> tableMultiResultListener) throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
         wrapped.addTableMultiResultListener(tableMultiResultListener);
     }
 
     @Override
-    public void removeTableMultiResultListener(TableMultiResultListener<? super E> tableMultiResultListener) throws RemoteException {
+    public void removeTableMultiResultListener(TableMultiResultListener<? super R> tableMultiResultListener) throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
         wrapped.removeTableMultiResultListener(tableMultiResultListener);
@@ -48,7 +48,7 @@ public class TableMultiResultNodeClient<T,E extends TableMultiResult<? extends T
     }
 
     @Override
-    public List<? extends E> getResults() throws RemoteException {
+    public List<? extends R> getResults() throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
         
         return wrapped.getResults();
