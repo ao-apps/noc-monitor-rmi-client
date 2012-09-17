@@ -7,14 +7,13 @@ package com.aoindustries.noc.monitor.rmi.client;
 
 import com.aoindustries.lang.NullArgumentException;
 import com.aoindustries.lang.ObjectUtils;
+import com.aoindustries.noc.monitor.callable.CallableMonitor;
 import com.aoindustries.noc.monitor.common.Monitor;
-import com.aoindustries.noc.monitor.common.Node;
-import com.aoindustries.noc.monitor.common.RootNode;
-import com.aoindustries.noc.monitor.common.SingleResultNode;
+import com.aoindustries.noc.monitor.common.SingleResultListener;
 import com.aoindustries.noc.monitor.common.TableMultiResult;
-import com.aoindustries.noc.monitor.common.TableMultiResultNode;
-import com.aoindustries.noc.monitor.common.TableResultNode;
-import com.aoindustries.noc.monitor.wrapper.WrappedMonitor;
+import com.aoindustries.noc.monitor.common.TableMultiResultListener;
+import com.aoindustries.noc.monitor.common.TableResultListener;
+import com.aoindustries.noc.monitor.common.TreeListener;
 import com.aoindustries.rmi.RMIClientSocketFactorySSL;
 import com.aoindustries.rmi.RMIServerSocketFactorySSL;
 import com.aoindustries.rmi.RegistryManager;
@@ -41,11 +40,11 @@ import java.util.logging.Logger;
  * Exports the monitor and all nodes.  The wrapped monitor is not exported directly,
  * but rather this wrapper of it is exported.
  *
- * // TODO: Wrap and export callbacks
+ * // TODO: Re-add callbacks on reconnect?
  *
  * @author  AO Industries, Inc.
  */
-public class RmiClientMonitor extends WrappedMonitor {
+public class RmiClientMonitor extends CallableMonitor {
 
     private static final Logger logger = Logger.getLogger(RmiClientMonitor.class.getName());
 
@@ -189,7 +188,7 @@ public class RmiClientMonitor extends WrappedMonitor {
     @Override
     protected <T> T call(Callable<T> callable, boolean allowRetry) throws RemoteException {
         try {
-            return callable.call();
+            return super.call(callable, allowRetry);
         } catch(NoSuchObjectException err) {
             try {
                 disconnect();
@@ -211,37 +210,26 @@ public class RmiClientMonitor extends WrappedMonitor {
                 logger.log(Level.SEVERE, null, err2);
             }
             throw err;
-        } catch(RemoteException err) {
-            throw err;
-        } catch(RuntimeException err) {
-            throw err;
-        } catch(Exception err) {
-            throw new RemoteException(err.getMessage(), err);
         }
     }
 
     @Override
-    protected RmiClientNode newWrappedNode(Node node) {
-        return new RmiClientNode(this, node);
+    protected RmiClientTreeListener newWrappedTreeListener(TreeListener treeListener) throws RemoteException {
+        return new RmiClientTreeListener(this, treeListener);
     }
 
     @Override
-    protected RmiClientRootNode newWrappedRootNode(RootNode node) {
-        return new RmiClientRootNode(this, node);
+    protected RmiClientSingleResultListener newWrappedSingleResultListener(SingleResultListener singleResultListener) throws RemoteException {
+        return new RmiClientSingleResultListener(this, singleResultListener);
     }
 
     @Override
-    protected RmiClientSingleResultNode newWrappedSingleResultNode(SingleResultNode node) {
-        return new RmiClientSingleResultNode(this, node);
+    protected <R extends TableMultiResult> RmiClientTableMultiResultListener<R> newWrappedTableMultiResultListener(TableMultiResultListener<R> tableMultiResultListener) throws RemoteException {
+        return new RmiClientTableMultiResultListener<R>(this, tableMultiResultListener);
     }
 
     @Override
-    protected <R extends TableMultiResult> RmiClientTableMultiResultNode<R> newWrappedTableMultiResultNode(TableMultiResultNode<R> node) {
-        return new RmiClientTableMultiResultNode<R>(this, node);
-    }
-
-    @Override
-    protected RmiClientTableResultNode newWrappedTableResultNode(TableResultNode node) {
-        return new RmiClientTableResultNode(this, node);
+    protected RmiClientTableResultListener newWrappedTableResultListener(TableResultListener tableResultListener) throws RemoteException {
+        return new RmiClientTableResultListener(this, tableResultListener);
     }
 }
