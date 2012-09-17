@@ -52,20 +52,20 @@ public class RmiClientMonitor extends CallableMonitor {
 
         private final String publicAddress;
         private final String listenAddress;
-        private final int    port;
+        private final int    listenPort;
         private final String serverAddress;
         private final int    serverPort;
 
         private CacheKey(
             String publicAddress,
             String listenAddress,
-            int port,
+            int listenPort,
             String serverAddress,
             int serverPort
         ) {
             this.publicAddress = publicAddress;
             this.listenAddress = listenAddress;
-            this.port          = port;
+            this.listenPort    = listenPort;
             this.serverAddress = NullArgumentException.checkNotNull(serverAddress, "serverAddress");
             this.serverPort    = serverPort;
         }
@@ -76,7 +76,7 @@ public class RmiClientMonitor extends CallableMonitor {
             if(!(O instanceof CacheKey)) return false;
             CacheKey other = (CacheKey)O;
             return
-                port==other.port
+                listenPort==other.listenPort
                 && serverPort==other.serverPort
                 && ObjectUtils.equals(publicAddress, other.publicAddress)
                 && ObjectUtils.equals(listenAddress, other.listenAddress)
@@ -89,7 +89,7 @@ public class RmiClientMonitor extends CallableMonitor {
             return
                 ObjectUtils.hashCode(publicAddress)
                 ^ (ObjectUtils.hashCode(listenAddress)*7)
-                ^ (port*11)
+                ^ (listenPort*11)
                 ^ (serverAddress.hashCode()*13)
                 ^ (serverPort*17)
             ;
@@ -104,22 +104,22 @@ public class RmiClientMonitor extends CallableMonitor {
     public static RmiClientMonitor getInstance(
         String publicAddress,
         String listenAddress,
-        int port,
+        int listenPort,
         String serverAddress,
         int serverPort
     ) throws RemoteException {
-        CacheKey key = new CacheKey(publicAddress, listenAddress, port, serverAddress, serverPort);
+        CacheKey key = new CacheKey(publicAddress, listenAddress, listenPort, serverAddress, serverPort);
         synchronized(cache) {
             RmiClientMonitor client = cache.get(key);
             if(client==null) {
-                client = new RmiClientMonitor(publicAddress, listenAddress, port, serverAddress, serverPort);
+                client = new RmiClientMonitor(publicAddress, listenAddress, listenPort, serverAddress, serverPort);
                 cache.put(key, client);
             }
             return client;
         }
     }
 
-    final int port;
+    final int listenPort;
     final RMIClientSocketFactory csf;
     final RMIServerSocketFactory ssf;
     private final String serverAddress;
@@ -128,7 +128,7 @@ public class RmiClientMonitor extends CallableMonitor {
     private RmiClientMonitor(
         String publicAddress,
         String listenAddress,
-        int port,
+        int listenPort,
         String serverAddress,
         int serverPort
     ) throws RemoteException {
@@ -155,7 +155,7 @@ public class RmiClientMonitor extends CallableMonitor {
             ssf = new RMIServerSocketFactorySSL();
         }
 
-        this.port          = port;
+        this.listenPort    = listenPort;
         this.serverAddress = serverAddress;
         this.serverPort    = serverPort;
 
@@ -178,9 +178,40 @@ public class RmiClientMonitor extends CallableMonitor {
      * Creates the local registry if not yet created, then exports the object.
      */
     Remote exportObject(Remote obj) throws RemoteException {
-        RegistryManager.createRegistry(port, csf, ssf);
-        return UnicastRemoteObject.exportObject(obj, port, csf, ssf);
+        RegistryManager.createRegistry(listenPort, csf, ssf);
+        return UnicastRemoteObject.exportObject(obj, listenPort, csf, ssf);
     }
+
+    /**
+     * Tries for up to ten seconds to gracefully unexport an object.  If still not successful, logs a warning and forcefully unexports.
+     *
+     * TODO: Should we unexport listeners after they are removed, or just leave it to the garbage collector?
+     * TODO: Same question about objects exported from server.
+     */
+    /*
+    void unexportObject(Remote remote) {
+        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+        try {
+            boolean unexported = false;
+            for(int c=0;c<100;c++) {
+                if(UnicastRemoteObject.unexportObject(remote, false)) {
+                    unexported = true;
+                    break;
+                }
+                try {
+                    Thread.sleep(100);
+                } catch(InterruptedException err) {
+                    logger.log(Level.WARNING, null, err);
+                }
+            }
+            if(!unexported) {
+                logger.log(Level.WARNING, null, new RuntimeException("Unable to unexport Object, now being forceful"));
+                UnicastRemoteObject.unexportObject(remote, true);
+            }
+        } catch(NoSuchObjectException err) {
+            logger.log(Level.WARNING, null, err);
+        }
+    }*/
 
     /**
      * Disconnects on RMI exceptions that indicate RMI connection problem.
