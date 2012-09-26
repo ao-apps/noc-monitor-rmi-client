@@ -148,7 +148,8 @@ public class RmiClientMonitor extends CallableMonitor {
 
         // RMI socket factories
         if(listenAddress!=null && listenAddress.length()>0) {
-            csf = new RMIClientSocketFactorySSL(listenAddress); // csf = new RMIClientSocketFactorySSL();
+            // TODO: Why doesn't listenAddress work on the next line?
+            csf = new RMIClientSocketFactorySSL();
             ssf = new RMIServerSocketFactorySSL(listenAddress);
         } else {
             csf = new RMIClientSocketFactorySSL();
