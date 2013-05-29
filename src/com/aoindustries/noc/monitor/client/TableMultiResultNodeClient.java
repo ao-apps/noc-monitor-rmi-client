@@ -5,9 +5,9 @@
  */
 package com.aoindustries.noc.monitor.client;
 
-import com.aoindustries.noc.common.TableMultiResult;
-import com.aoindustries.noc.common.TableMultiResultListener;
-import com.aoindustries.noc.common.TableMultiResultNode;
+import com.aoindustries.noc.monitor.common.TableMultiResult;
+import com.aoindustries.noc.monitor.common.TableMultiResultListener;
+import com.aoindustries.noc.monitor.common.TableMultiResultNode;
 import java.rmi.RemoteException;
 import java.util.List;
 import javax.swing.SwingUtilities;

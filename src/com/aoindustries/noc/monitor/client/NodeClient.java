@@ -1,16 +1,16 @@
 /*
- * Copyright 2008-2012 by AO Industries, Inc.,
+ * Copyright 2008-2009 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
 package com.aoindustries.noc.monitor.client;
 
-import com.aoindustries.noc.common.AlertLevel;
-import com.aoindustries.noc.common.SingleResultNode;
-import com.aoindustries.noc.common.Node;
-import com.aoindustries.noc.common.RootNode;
-import com.aoindustries.noc.common.TableMultiResultNode;
-import com.aoindustries.noc.common.TableResultNode;
+import com.aoindustries.noc.monitor.common.AlertLevel;
+import com.aoindustries.noc.monitor.common.Node;
+import com.aoindustries.noc.monitor.common.RootNode;
+import com.aoindustries.noc.monitor.common.SingleResultNode;
+import com.aoindustries.noc.monitor.common.TableMultiResultNode;
+import com.aoindustries.noc.monitor.common.TableResultNode;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,20 +31,20 @@ public class NodeClient implements Node {
     }
 
     @Override
-    public Node getParent() throws RemoteException {
+    public NodeClient getParent() throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
         
         return new NodeClient(wrapped.getParent());
     }
 
     @Override
-    public List<? extends Node> getChildren() throws RemoteException {
+    public List<? extends NodeClient> getChildren() throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
         List<? extends Node> children = wrapped.getChildren();
 
         // Wrap
-        List<Node> localWrapped = new ArrayList<Node>(children.size());
+        List<NodeClient> localWrapped = new ArrayList<NodeClient>(children.size());
         for(Node child : children) {
             localWrapped.add(wrap(child));
         }
@@ -53,7 +53,7 @@ public class NodeClient implements Node {
     }
 
     @SuppressWarnings("unchecked")
-    static Node wrap(Node node) {
+    static NodeClient wrap(Node node) {
         if(node instanceof SingleResultNode) return new SingleResultNodeClient((SingleResultNode)node);
         if(node instanceof TableResultNode) return new TableResultNodeClient((TableResultNode)node);
         if(node instanceof TableMultiResultNode) return new TableMultiResultNodeClient((TableMultiResultNode)node);
@@ -80,13 +80,6 @@ public class NodeClient implements Node {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
         return wrapped.getAllowsChildren();
-    }
-
-    @Override
-    public String getId() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
-
-        return wrapped.getId();
     }
 
     @Override

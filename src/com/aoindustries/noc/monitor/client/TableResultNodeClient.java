@@ -1,13 +1,13 @@
 /*
- * Copyright 2008-2011 by AO Industries, Inc.,
+ * Copyright 2008-2009 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
 package com.aoindustries.noc.monitor.client;
 
-import com.aoindustries.noc.common.TableResult;
-import com.aoindustries.noc.common.TableResultListener;
-import com.aoindustries.noc.common.TableResultNode;
+import com.aoindustries.noc.monitor.common.TableResult;
+import com.aoindustries.noc.monitor.common.TableResultListener;
+import com.aoindustries.noc.monitor.common.TableResultNode;
 import java.rmi.RemoteException;
 import javax.swing.SwingUtilities;
 

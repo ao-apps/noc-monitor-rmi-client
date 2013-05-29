@@ -1,13 +1,13 @@
 /*
- * Copyright 2008-2011 by AO Industries, Inc.,
+ * Copyright 2008-2009 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
 package com.aoindustries.noc.monitor.client;
 
-import com.aoindustries.noc.common.SingleResultListener;
-import com.aoindustries.noc.common.SingleResultNode;
-import com.aoindustries.noc.common.SingleResult;
+import com.aoindustries.noc.monitor.common.SingleResult;
+import com.aoindustries.noc.monitor.common.SingleResultListener;
+import com.aoindustries.noc.monitor.common.SingleResultNode;
 import java.rmi.RemoteException;
 import javax.swing.SwingUtilities;
 
@@ -25,18 +25,21 @@ public class SingleResultNodeClient extends NodeClient implements SingleResultNo
         this.wrapped = wrapped;
     }
 
+	@Override
     public void addSingleResultListener(SingleResultListener singleResultListener) throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
         wrapped.addSingleResultListener(singleResultListener);
     }
 
+	@Override
     public void removeSingleResultListener(SingleResultListener singleResultListener) throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
         wrapped.removeSingleResultListener(singleResultListener);
     }
 
+	@Override
     public SingleResult getLastResult() throws RemoteException {
         assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
         
