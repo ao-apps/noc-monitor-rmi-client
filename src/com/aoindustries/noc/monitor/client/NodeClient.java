@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2009 by AO Industries, Inc.,
+ * Copyright 2008-2009, 2016 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
@@ -22,96 +22,96 @@ import javax.swing.SwingUtilities;
  */
 public class NodeClient implements Node {
 
-    final private Node wrapped;
+	final private Node wrapped;
 
-    NodeClient(Node wrapped) {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	NodeClient(Node wrapped) {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        this.wrapped = wrapped;
-    }
+		this.wrapped = wrapped;
+	}
 
-    @Override
-    public NodeClient getParent() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
-        
-        return new NodeClient(wrapped.getParent());
-    }
+	@Override
+	public NodeClient getParent() throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-    @Override
-    public List<? extends NodeClient> getChildren() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+		return new NodeClient(wrapped.getParent());
+	}
 
-        List<? extends Node> children = wrapped.getChildren();
+	@Override
+	public List<? extends NodeClient> getChildren() throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        // Wrap
-        List<NodeClient> localWrapped = new ArrayList<NodeClient>(children.size());
-        for(Node child : children) {
-            localWrapped.add(wrap(child));
-        }
-        
-        return Collections.unmodifiableList(localWrapped);
-    }
+		List<? extends Node> children = wrapped.getChildren();
 
-    @SuppressWarnings("unchecked")
-    static NodeClient wrap(Node node) {
-        if(node instanceof SingleResultNode) return new SingleResultNodeClient((SingleResultNode)node);
-        if(node instanceof TableResultNode) return new TableResultNodeClient((TableResultNode)node);
-        if(node instanceof TableMultiResultNode) return new TableMultiResultNodeClient((TableMultiResultNode)node);
-        if(node instanceof RootNode) return new RootNodeClient((RootNode)node);
-        return new NodeClient(node);
-    }
+		// Wrap
+		List<NodeClient> localWrapped = new ArrayList<>(children.size());
+		for(Node child : children) {
+			localWrapped.add(wrap(child));
+		}
 
-    @Override
-    public AlertLevel getAlertLevel() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+		return Collections.unmodifiableList(localWrapped);
+	}
 
-        return wrapped.getAlertLevel();
-    }
+	@SuppressWarnings("unchecked")
+	static NodeClient wrap(Node node) {
+		if(node instanceof SingleResultNode) return new SingleResultNodeClient((SingleResultNode)node);
+		if(node instanceof TableResultNode) return new TableResultNodeClient((TableResultNode)node);
+		if(node instanceof TableMultiResultNode) return new TableMultiResultNodeClient((TableMultiResultNode)node);
+		if(node instanceof RootNode) return new RootNodeClient((RootNode)node);
+		return new NodeClient(node);
+	}
 
-    @Override
-    public String getAlertMessage() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	@Override
+	public AlertLevel getAlertLevel() throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        return wrapped.getAlertMessage();
-    }
+		return wrapped.getAlertLevel();
+	}
 
-    @Override
-    public boolean getAllowsChildren() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	@Override
+	public String getAlertMessage() throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        return wrapped.getAllowsChildren();
-    }
+		return wrapped.getAlertMessage();
+	}
 
-    @Override
-    public String getLabel() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	@Override
+	public boolean getAllowsChildren() throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        return wrapped.getLabel();
-    }
-    
-    @Override
-    public boolean equals(Object O) {
-        // Does this incur a round-trip to the server? assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
-        // The request times were 1-3 ns, I don't think it does
-        if(O==null) return false;
-        if(!(O instanceof Node)) return false;
+		return wrapped.getAllowsChildren();
+	}
 
-        // Unwrap this
-        Node thisNode = this;
-        while(thisNode instanceof NodeClient) thisNode = ((NodeClient)thisNode).wrapped;
+	@Override
+	public String getLabel() throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        // Unwrap other
-        Node otherNode = (Node)O;
-        while(otherNode instanceof NodeClient) otherNode = ((NodeClient)otherNode).wrapped;
+		return wrapped.getLabel();
+	}
 
-        // Check equals
-        return thisNode.equals(otherNode);
-    }
+	@Override
+	public boolean equals(Object O) {
+		// Does this incur a round-trip to the server? assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+		// The request times were 1-3 ns, I don't think it does
+		if(O==null) return false;
+		if(!(O instanceof Node)) return false;
 
-    @Override
-    public int hashCode() {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+		// Unwrap this
+		Node thisNode = this;
+		while(thisNode instanceof NodeClient) thisNode = ((NodeClient)thisNode).wrapped;
 
-        return wrapped.hashCode();
-    }
+		// Unwrap other
+		Node otherNode = (Node)O;
+		while(otherNode instanceof NodeClient) otherNode = ((NodeClient)otherNode).wrapped;
+
+		// Check equals
+		return thisNode.equals(otherNode);
+	}
+
+	@Override
+	public int hashCode() {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+
+		return wrapped.hashCode();
+	}
 }

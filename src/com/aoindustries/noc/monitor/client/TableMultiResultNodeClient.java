@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 by AO Industries, Inc.,
+ * Copyright 2008-2012, 2016 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
@@ -17,40 +17,40 @@ import javax.swing.SwingUtilities;
  */
 public class TableMultiResultNodeClient<R extends TableMultiResult> extends NodeClient implements TableMultiResultNode<R> {
 
-    final private TableMultiResultNode<R> wrapped;
+	final private TableMultiResultNode<R> wrapped;
 
-    TableMultiResultNodeClient(TableMultiResultNode<R> wrapped) {
-        super(wrapped);
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	TableMultiResultNodeClient(TableMultiResultNode<R> wrapped) {
+		super(wrapped);
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        this.wrapped = wrapped;
-    }
+		this.wrapped = wrapped;
+	}
 
-    @Override
-    public void addTableMultiResultListener(TableMultiResultListener<? super R> tableMultiResultListener) throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	@Override
+	public void addTableMultiResultListener(TableMultiResultListener<? super R> tableMultiResultListener) throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        wrapped.addTableMultiResultListener(tableMultiResultListener);
-    }
+		wrapped.addTableMultiResultListener(tableMultiResultListener);
+	}
 
-    @Override
-    public void removeTableMultiResultListener(TableMultiResultListener<? super R> tableMultiResultListener) throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	@Override
+	public void removeTableMultiResultListener(TableMultiResultListener<? super R> tableMultiResultListener) throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        wrapped.removeTableMultiResultListener(tableMultiResultListener);
-    }
+		wrapped.removeTableMultiResultListener(tableMultiResultListener);
+	}
 
-    @Override
-    public List<?> getColumnHeaders() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	@Override
+	public List<?> getColumnHeaders() throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        return wrapped.getColumnHeaders();
-    }
+		return wrapped.getColumnHeaders();
+	}
 
-    @Override
-    public List<? extends R> getResults() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
-        
-        return wrapped.getResults();
-    }
+	@Override
+	public List<? extends R> getResults() throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+
+		return wrapped.getResults();
+	}
 }

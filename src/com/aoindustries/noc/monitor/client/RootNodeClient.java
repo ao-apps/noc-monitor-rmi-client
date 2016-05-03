@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2009 by AO Industries, Inc.,
+ * Copyright 2008-2009, 2016 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
@@ -16,43 +16,43 @@ import javax.swing.SwingUtilities;
  */
 public class RootNodeClient extends NodeClient implements RootNode {
 
-    final private RootNode wrapped;
+	final private RootNode wrapped;
 
-    RootNodeClient(RootNode wrapped) {
-        super(wrapped);
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	RootNodeClient(RootNode wrapped) {
+		super(wrapped);
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        this.wrapped = wrapped;
-    }
-
-	@Override
-    public void addTreeListener(TreeListener treeListener) throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
-
-        wrapped.addTreeListener(treeListener);
-    }
+		this.wrapped = wrapped;
+	}
 
 	@Override
-    public void removeTreeListener(TreeListener treeListener) throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	public void addTreeListener(TreeListener treeListener) throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        wrapped.removeTreeListener(treeListener);
-    }
+		wrapped.addTreeListener(treeListener);
+	}
 
 	@Override
-    public NodeSnapshot getSnapshot() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	public void removeTreeListener(TreeListener treeListener) throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        NodeSnapshot nodeSnapshot = wrapped.getSnapshot();
-        wrapSnapshot(nodeSnapshot);
-        return nodeSnapshot;
-    }
+		wrapped.removeTreeListener(treeListener);
+	}
 
-    /**
-     * Recursively wraps the nodes of the snapshot.
-     */
-    private static void wrapSnapshot(NodeSnapshot snapshot) {
-        snapshot.setNode(NodeClient.wrap(snapshot.getNode()));
-        for(NodeSnapshot child : snapshot.getChildren()) wrapSnapshot(child);
-    }
+	@Override
+	public NodeSnapshot getSnapshot() throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+
+		NodeSnapshot nodeSnapshot = wrapped.getSnapshot();
+		wrapSnapshot(nodeSnapshot);
+		return nodeSnapshot;
+	}
+
+	/**
+	 * Recursively wraps the nodes of the snapshot.
+	 */
+	private static void wrapSnapshot(NodeSnapshot snapshot) {
+		snapshot.setNode(NodeClient.wrap(snapshot.getNode()));
+		for(NodeSnapshot child : snapshot.getChildren()) wrapSnapshot(child);
+	}
 }

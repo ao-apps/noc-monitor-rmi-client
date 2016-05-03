@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2009 by AO Industries, Inc.,
+ * Copyright 2008-2009, 2016 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
@@ -16,33 +16,33 @@ import javax.swing.SwingUtilities;
  */
 public class TableResultNodeClient extends NodeClient implements TableResultNode {
 
-    final private TableResultNode wrapped;
+	final private TableResultNode wrapped;
 
-    TableResultNodeClient(TableResultNode wrapped) {
-        super(wrapped);
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	TableResultNodeClient(TableResultNode wrapped) {
+		super(wrapped);
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        this.wrapped = wrapped;
-    }
+		this.wrapped = wrapped;
+	}
 
-    @Override
-    public void addTableResultListener(TableResultListener tableResultListener) throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	@Override
+	public void addTableResultListener(TableResultListener tableResultListener) throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        wrapped.addTableResultListener(tableResultListener);
-    }
+		wrapped.addTableResultListener(tableResultListener);
+	}
 
-    @Override
-    public void removeTableResultListener(TableResultListener tableResultListener) throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	@Override
+	public void removeTableResultListener(TableResultListener tableResultListener) throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        wrapped.removeTableResultListener(tableResultListener);
-    }
+		wrapped.removeTableResultListener(tableResultListener);
+	}
 
-    @Override
-    public TableResult getLastResult() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
-        
-        return wrapped.getLastResult();
-    }
+	@Override
+	public TableResult getLastResult() throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+
+		return wrapped.getLastResult();
+	}
 }

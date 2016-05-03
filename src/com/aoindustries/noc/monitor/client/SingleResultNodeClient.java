@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2009 by AO Industries, Inc.,
+ * Copyright 2008-2009, 2016 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
@@ -16,33 +16,33 @@ import javax.swing.SwingUtilities;
  */
 public class SingleResultNodeClient extends NodeClient implements SingleResultNode {
 
-    final private SingleResultNode wrapped;
+	final private SingleResultNode wrapped;
 
-    SingleResultNodeClient(SingleResultNode wrapped) {
-        super(wrapped);
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	SingleResultNodeClient(SingleResultNode wrapped) {
+		super(wrapped);
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        this.wrapped = wrapped;
-    }
-
-	@Override
-    public void addSingleResultListener(SingleResultListener singleResultListener) throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
-
-        wrapped.addSingleResultListener(singleResultListener);
-    }
+		this.wrapped = wrapped;
+	}
 
 	@Override
-    public void removeSingleResultListener(SingleResultListener singleResultListener) throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	public void addSingleResultListener(SingleResultListener singleResultListener) throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        wrapped.removeSingleResultListener(singleResultListener);
-    }
+		wrapped.addSingleResultListener(singleResultListener);
+	}
 
 	@Override
-    public SingleResult getLastResult() throws RemoteException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
-        
-        return wrapped.getLastResult();
-    }
+	public void removeSingleResultListener(SingleResultListener singleResultListener) throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+
+		wrapped.removeSingleResultListener(singleResultListener);
+	}
+
+	@Override
+	public SingleResult getLastResult() throws RemoteException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+
+		return wrapped.getLastResult();
+	}
 }

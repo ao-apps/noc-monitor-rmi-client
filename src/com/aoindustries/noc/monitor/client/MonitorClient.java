@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2009 by AO Industries, Inc.,
+ * Copyright 2008-2009, 2016 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
@@ -21,23 +21,20 @@ import javax.swing.SwingUtilities;
  */
 public class MonitorClient implements Monitor {
 
-    final private String server;
-    final private Monitor wrapped;
-    
-    public MonitorClient(String server, int port, RMIClientSocketFactory csf) throws RemoteException, NotBoundException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	final private Monitor wrapped;
 
-        this.server = server;
+	public MonitorClient(String server, int port, RMIClientSocketFactory csf) throws RemoteException, NotBoundException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        // Setup RMI
-        Registry registry = LocateRegistry.getRegistry(server, port, csf);
-        wrapped = (Monitor)registry.lookup("com.aoindustries.noc.monitor.server.MonitorServer");
-    }
+		// Setup RMI
+		Registry registry = LocateRegistry.getRegistry(server, port, csf);
+		wrapped = (Monitor)registry.lookup("com.aoindustries.noc.monitor.server.MonitorServer");
+	}
 
-    @Override
-    public RootNodeClient login(Locale locale, String username, String password) throws RemoteException, IOException, SQLException {
-        assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+	@Override
+	public RootNodeClient login(Locale locale, String username, String password) throws RemoteException, IOException, SQLException {
+		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-        return new RootNodeClient(wrapped.login(locale, username, password));
-    }
+		return new RootNodeClient(wrapped.login(locale, username, password));
+	}
 }
