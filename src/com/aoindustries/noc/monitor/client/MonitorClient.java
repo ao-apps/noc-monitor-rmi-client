@@ -1,10 +1,11 @@
 /*
- * Copyright 2008-2009, 2016 by AO Industries, Inc.,
+ * Copyright 2008-2009, 2016, 2017 by AO Industries, Inc.,
  * 7262 Bull Pen Cir, Mobile, Alabama, 36695, U.S.A.
  * All rights reserved.
  */
 package com.aoindustries.noc.monitor.client;
 
+import com.aoindustries.aoserv.client.validator.UserId;
 import com.aoindustries.noc.monitor.common.Monitor;
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -32,7 +33,7 @@ public class MonitorClient implements Monitor {
 	}
 
 	@Override
-	public RootNodeClient login(Locale locale, String username, String password) throws RemoteException, IOException, SQLException {
+	public RootNodeClient login(Locale locale, UserId username, String password) throws RemoteException, IOException, SQLException {
 		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
 		return new RootNodeClient(wrapped.login(locale, username, password));
