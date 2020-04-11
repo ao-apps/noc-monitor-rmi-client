@@ -24,9 +24,9 @@
 RMI Client for [Network Operations Center Monitoring](https://github.com/aoindustries/noc-monitor).
 
 ## Project Links
-* [Project Home](https://aoindustries.com/noc-monitor-rmi-client/)
-* [Changelog](https://aoindustries.com/noc-monitor-rmi-client/changelog)
-* [API Docs](https://aoindustries.com/noc-monitor-rmi-client/apidocs/)
+* [Project Home](https://aoindustries.com/noc/monitor/rmi-client/)
+* [Changelog](https://aoindustries.com/noc/monitor/rmi-client/changelog)
+* [API Docs](https://aoindustries.com/noc/monitor/rmi-client/apidocs/)
 * [Maven Central Repository](https://search.maven.org/artifact/com.aoindustries/noc-monitor-rmi-client)
 * [GitHub](https://github.com/aoindustries/noc-monitor-rmi-client)
 
