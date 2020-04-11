@@ -29,7 +29,7 @@ along with noc-monitor-rmi-client.  If not, see <http://www.gnu.org/licenses />.
 		<relativePath>../../../ao-oss-parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoindustries</groupId><artifactId>noc-monitor-rmi-client</artifactId><version>1.0.0-SNAPSHOT</version>
+	<groupId>com.aoindustries</groupId><artifactId>noc-monitor-rmi-client</artifactId><version>1.0.0</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -49,7 +49,7 @@ along with noc-monitor-rmi-client.  If not, see <http://www.gnu.org/licenses />.
 		<connection>scm:git:git://github.com/aoindustries/noc-monitor-rmi-client.git</connection>
 		<developerConnection>scm:git:git@github.com:aoindustries/noc-monitor-rmi-client.git</developerConnection>
 		<url>https://github.com/aoindustries/noc-monitor-rmi-client</url>
-		<tag>HEAD</tag>
+		<tag>noc-monitor-rmi-client-1.0.0</tag>
 	</scm>
 
 	<issueManagement>
