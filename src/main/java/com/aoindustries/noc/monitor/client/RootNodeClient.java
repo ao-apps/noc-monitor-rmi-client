@@ -70,6 +70,8 @@ public class RootNodeClient extends NodeClient implements RootNode {
 	 */
 	private static void wrapSnapshot(NodeSnapshot snapshot) {
 		snapshot.setNode(NodeClient.wrap(snapshot.getNode()));
-		for(NodeSnapshot child : snapshot.getChildren()) wrapSnapshot(child);
+		for(NodeSnapshot child : snapshot.getChildren()) {
+			wrapSnapshot(child);
+		}
 	}
 }

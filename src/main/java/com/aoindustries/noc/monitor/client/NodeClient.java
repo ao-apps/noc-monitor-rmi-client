@@ -123,13 +123,18 @@ public class NodeClient implements Node {
 
 		// Unwrap this
 		Node thisNode = this;
-		while(thisNode instanceof NodeClient) thisNode = ((NodeClient)thisNode).wrapped;
+		while(thisNode instanceof NodeClient) {
+			thisNode = ((NodeClient)thisNode).wrapped;
+		}
 
 		// Unwrap other
 		Node otherNode = (Node)O;
-		while(otherNode instanceof NodeClient) otherNode = ((NodeClient)otherNode).wrapped;
+		while(otherNode instanceof NodeClient) {
+			otherNode = ((NodeClient)otherNode).wrapped;
+		}
 
 		// Check equals
+		assert thisNode != null;
 		return thisNode.equals(otherNode);
 	}
 
