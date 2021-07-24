@@ -38,7 +38,7 @@ along with noc-monitor-rmi-client.  If not, see <http://www.gnu.org/licenses />.
 / <a target="${javadoc.target}" href="https://aoindustries.com/noc/monitor/">Monitor</a>
 / <a target="${javadoc.target}" href="${project.url}">RMI Client</a>]]></javadoc.breadcrumbs>
 		<description.html><![CDATA[RMI Client for <a target="${javadoc.target}" href="https://aoindustries.com/noc/monitor/">Network Operations Center Monitoring</a>.]]></description.html>
-		<!-- TODO: Remove once moved to oss.aoapps.com -->
+		<!-- TODO: Remove once moved to platform.aoapps.com -->
 		<google.analytics.trackingId>UA-86871646-1</google.analytics.trackingId>
 		<!-- com.aoindustries is on original Sonatype Nexus Repository Manager -->
 		<nexusUrl>https://oss.sonatype.org/</nexusUrl>
@@ -166,7 +166,7 @@ along with noc-monitor-rmi-client.  If not, see <http://www.gnu.org/licenses />.
 		<dependencies>
 			<!-- Direct -->
 			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>aoserv-client</artifactId><version>1.84.22-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+				<groupId>com.aoindustries</groupId><artifactId>aoserv-client</artifactId><version>1.85.0${POST-SNAPSHOT}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.aoindustries</groupId><artifactId>noc-monitor-api</artifactId><version>1.3.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
