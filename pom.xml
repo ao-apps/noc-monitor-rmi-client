@@ -46,6 +46,8 @@ along with noc-monitor-rmi-client.  If not, see <http://www.gnu.org/licenses />.
 		<sonar.projectKey>com.aoapps.platform:noc-monitor-rmi-client<!-- TODO: ${project.groupId}:${project.artifactId} --></sonar.projectKey>
 		<sonar.organization>aoindustries</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<!-- TODO: Implement tests -->
+		<sonar.coverage.exclusions>**.*</sonar.coverage.exclusions>
 	</properties>
 
 	<name>NOC Monitor RMI Client</name>
