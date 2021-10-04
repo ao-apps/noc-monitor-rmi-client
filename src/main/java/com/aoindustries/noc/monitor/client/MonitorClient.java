@@ -1,6 +1,6 @@
 /*
  * noc-monitor-rmi-client - RMI Client for Network Operations Center Monitoring.
- * Copyright (C) 2008, 2009, 2016, 2017, 2018, 2020  AO Industries, Inc.
+ * Copyright (C) 2008, 2009, 2016, 2017, 2018, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -39,7 +39,7 @@ import javax.swing.SwingUtilities;
  */
 public class MonitorClient implements Monitor {
 
-	final private Monitor wrapped;
+	private final Monitor wrapped;
 
 	public MonitorClient(String server, int port, RMIClientSocketFactory csf) throws RemoteException, NotBoundException {
 		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";

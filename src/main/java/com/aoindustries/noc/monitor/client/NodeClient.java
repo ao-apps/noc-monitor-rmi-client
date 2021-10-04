@@ -1,6 +1,6 @@
 /*
  * noc-monitor-rmi-client - RMI Client for Network Operations Center Monitoring.
- * Copyright (C) 2008, 2009, 2016, 2018, 2020  AO Industries, Inc.
+ * Copyright (C) 2008, 2009, 2016, 2018, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -40,7 +40,7 @@ import javax.swing.SwingUtilities;
  */
 public class NodeClient implements Node {
 
-	final private Node wrapped;
+	private final Node wrapped;
 
 	NodeClient(Node wrapped) {
 		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";

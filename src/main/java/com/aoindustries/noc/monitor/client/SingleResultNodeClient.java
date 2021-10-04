@@ -1,6 +1,6 @@
 /*
  * noc-monitor-rmi-client - RMI Client for Network Operations Center Monitoring.
- * Copyright (C) 2008, 2009, 2016, 2020  AO Industries, Inc.
+ * Copyright (C) 2008, 2009, 2016, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -33,7 +33,7 @@ import javax.swing.SwingUtilities;
  */
 public class SingleResultNodeClient extends NodeClient implements SingleResultNode {
 
-	final private SingleResultNode wrapped;
+	private final SingleResultNode wrapped;
 
 	SingleResultNodeClient(SingleResultNode wrapped) {
 		super(wrapped);
