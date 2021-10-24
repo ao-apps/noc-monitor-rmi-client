@@ -115,11 +115,10 @@ public class NodeClient implements Node {
 	}
 
 	@Override
-	public boolean equals(Object O) {
+	public boolean equals(Object obj) {
 		// Does this incur a round-trip to the server? assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 		// The request times were 1-3 ns, I don't think it does
-		if(O==null) return false;
-		if(!(O instanceof Node)) return false;
+		if(!(obj instanceof Node)) return false;
 
 		// Unwrap this
 		Node thisNode = this;
@@ -128,7 +127,7 @@ public class NodeClient implements Node {
 		}
 
 		// Unwrap other
-		Node otherNode = (Node)O;
+		Node otherNode = (Node)obj;
 		while(otherNode instanceof NodeClient) {
 			otherNode = ((NodeClient)otherNode).wrapped;
 		}
