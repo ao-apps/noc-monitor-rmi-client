@@ -41,107 +41,117 @@ import javax.swing.SwingUtilities;
  */
 public class NodeClient implements Node {
 
-	private final Node wrapped;
+  private final Node wrapped;
 
-	NodeClient(Node wrapped) {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  NodeClient(Node wrapped) {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		this.wrapped = wrapped;
-	}
+    this.wrapped = wrapped;
+  }
 
-	@Override
-	public NodeClient getParent() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public NodeClient getParent() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return new NodeClient(wrapped.getParent());
-	}
+    return new NodeClient(wrapped.getParent());
+  }
 
-	@Override
-	public List<? extends NodeClient> getChildren() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public List<? extends NodeClient> getChildren() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		List<? extends Node> children = wrapped.getChildren();
+    List<? extends Node> children = wrapped.getChildren();
 
-		// Wrap
-		List<NodeClient> localWrapped = new ArrayList<>(children.size());
-		for(Node child : children) {
-			localWrapped.add(wrap(child));
-		}
+    // Wrap
+    List<NodeClient> localWrapped = new ArrayList<>(children.size());
+    for (Node child : children) {
+      localWrapped.add(wrap(child));
+    }
 
-		return Collections.unmodifiableList(localWrapped);
-	}
+    return Collections.unmodifiableList(localWrapped);
+  }
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	static NodeClient wrap(Node node) {
-		if(node instanceof SingleResultNode) return new SingleResultNodeClient((SingleResultNode)node);
-		if(node instanceof TableResultNode) return new TableResultNodeClient((TableResultNode)node);
-		if(node instanceof TableMultiResultNode) return new TableMultiResultNodeClient((TableMultiResultNode)node);
-		if(node instanceof RootNode) return new RootNodeClient((RootNode)node);
-		return new NodeClient(node);
-	}
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  static NodeClient wrap(Node node) {
+    if (node instanceof SingleResultNode) {
+      return new SingleResultNodeClient((SingleResultNode)node);
+    }
+    if (node instanceof TableResultNode) {
+      return new TableResultNodeClient((TableResultNode)node);
+    }
+    if (node instanceof TableMultiResultNode) {
+      return new TableMultiResultNodeClient((TableMultiResultNode)node);
+    }
+    if (node instanceof RootNode) {
+      return new RootNodeClient((RootNode)node);
+    }
+    return new NodeClient(node);
+  }
 
-	@Override
-	public AlertLevel getAlertLevel() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public AlertLevel getAlertLevel() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return wrapped.getAlertLevel();
-	}
+    return wrapped.getAlertLevel();
+  }
 
-	@Override
-	public String getAlertMessage() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public String getAlertMessage() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return wrapped.getAlertMessage();
-	}
+    return wrapped.getAlertMessage();
+  }
 
-	@Override
-	public AlertCategory getAlertCategory() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public AlertCategory getAlertCategory() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return wrapped.getAlertCategory();
-	}
+    return wrapped.getAlertCategory();
+  }
 
-	@Override
-	public boolean getAllowsChildren() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public boolean getAllowsChildren() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return wrapped.getAllowsChildren();
-	}
+    return wrapped.getAllowsChildren();
+  }
 
-	@Override
-	public String getLabel() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public String getLabel() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return wrapped.getLabel();
-	}
+    return wrapped.getLabel();
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		// Does this incur a round-trip to the server? assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
-		// The request times were 1-3 ns, I don't think it does
-		if(!(obj instanceof Node)) return false;
+  @Override
+  public boolean equals(Object obj) {
+    // Does this incur a round-trip to the server? assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+    // The request times were 1-3 ns, I don't think it does
+    if (!(obj instanceof Node)) {
+      return false;
+    }
 
-		// Unwrap this
-		Node thisNode = this;
-		while(thisNode instanceof NodeClient) {
-			thisNode = ((NodeClient)thisNode).wrapped;
-		}
+    // Unwrap this
+    Node thisNode = this;
+    while (thisNode instanceof NodeClient) {
+      thisNode = ((NodeClient)thisNode).wrapped;
+    }
 
-		// Unwrap other
-		Node otherNode = (Node)obj;
-		while(otherNode instanceof NodeClient) {
-			otherNode = ((NodeClient)otherNode).wrapped;
-		}
+    // Unwrap other
+    Node otherNode = (Node)obj;
+    while (otherNode instanceof NodeClient) {
+      otherNode = ((NodeClient)otherNode).wrapped;
+    }
 
-		// Check equals
-		assert thisNode != null;
-		return thisNode.equals(otherNode);
-	}
+    // Check equals
+    assert thisNode != null;
+    return thisNode.equals(otherNode);
+  }
 
-	@Override
-	public int hashCode() {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public int hashCode() {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return wrapped.hashCode();
-	}
+    return wrapped.hashCode();
+  }
 }

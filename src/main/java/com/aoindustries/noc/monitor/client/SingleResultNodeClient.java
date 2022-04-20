@@ -34,33 +34,33 @@ import javax.swing.SwingUtilities;
  */
 public class SingleResultNodeClient extends NodeClient implements SingleResultNode {
 
-	private final SingleResultNode wrapped;
+  private final SingleResultNode wrapped;
 
-	SingleResultNodeClient(SingleResultNode wrapped) {
-		super(wrapped);
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  SingleResultNodeClient(SingleResultNode wrapped) {
+    super(wrapped);
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		this.wrapped = wrapped;
-	}
+    this.wrapped = wrapped;
+  }
 
-	@Override
-	public void addSingleResultListener(SingleResultListener singleResultListener) throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public void addSingleResultListener(SingleResultListener singleResultListener) throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		wrapped.addSingleResultListener(singleResultListener);
-	}
+    wrapped.addSingleResultListener(singleResultListener);
+  }
 
-	@Override
-	public void removeSingleResultListener(SingleResultListener singleResultListener) throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public void removeSingleResultListener(SingleResultListener singleResultListener) throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		wrapped.removeSingleResultListener(singleResultListener);
-	}
+    wrapped.removeSingleResultListener(singleResultListener);
+  }
 
-	@Override
-	public SingleResult getLastResult() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public SingleResult getLastResult() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return wrapped.getLastResult();
-	}
+    return wrapped.getLastResult();
+  }
 }

@@ -34,33 +34,33 @@ import javax.swing.SwingUtilities;
  */
 public class TableResultNodeClient extends NodeClient implements TableResultNode {
 
-	private final TableResultNode wrapped;
+  private final TableResultNode wrapped;
 
-	TableResultNodeClient(TableResultNode wrapped) {
-		super(wrapped);
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  TableResultNodeClient(TableResultNode wrapped) {
+    super(wrapped);
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		this.wrapped = wrapped;
-	}
+    this.wrapped = wrapped;
+  }
 
-	@Override
-	public void addTableResultListener(TableResultListener tableResultListener) throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public void addTableResultListener(TableResultListener tableResultListener) throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		wrapped.addTableResultListener(tableResultListener);
-	}
+    wrapped.addTableResultListener(tableResultListener);
+  }
 
-	@Override
-	public void removeTableResultListener(TableResultListener tableResultListener) throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public void removeTableResultListener(TableResultListener tableResultListener) throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		wrapped.removeTableResultListener(tableResultListener);
-	}
+    wrapped.removeTableResultListener(tableResultListener);
+  }
 
-	@Override
-	public TableResult getLastResult() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public TableResult getLastResult() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return wrapped.getLastResult();
-	}
+    return wrapped.getLastResult();
+  }
 }

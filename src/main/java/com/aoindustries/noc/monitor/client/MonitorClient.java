@@ -41,20 +41,20 @@ import javax.swing.SwingUtilities;
 // TODO: Implement serialization filters to prevent malicious loading of new classes
 public class MonitorClient implements Monitor {
 
-	private final Monitor wrapped;
+  private final Monitor wrapped;
 
-	public MonitorClient(String server, int port, RMIClientSocketFactory csf) throws RemoteException, NotBoundException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  public MonitorClient(String server, int port, RMIClientSocketFactory csf) throws RemoteException, NotBoundException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		// Setup RMI
-		Registry registry = LocateRegistry.getRegistry(server, port, csf);
-		wrapped = (Monitor)registry.lookup("com.aoindustries.noc.monitor.server.MonitorServer");
-	}
+    // Setup RMI
+    Registry registry = LocateRegistry.getRegistry(server, port, csf);
+    wrapped = (Monitor)registry.lookup("com.aoindustries.noc.monitor.server.MonitorServer");
+  }
 
-	@Override
-	public RootNodeClient login(Locale locale, User.Name username, String password) throws RemoteException, IOException, SQLException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public RootNodeClient login(Locale locale, User.Name username, String password) throws RemoteException, IOException, SQLException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return new RootNodeClient(wrapped.login(locale, username, password));
-	}
+    return new RootNodeClient(wrapped.login(locale, username, password));
+  }
 }

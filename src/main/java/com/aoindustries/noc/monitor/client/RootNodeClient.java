@@ -34,45 +34,45 @@ import javax.swing.SwingUtilities;
  */
 public class RootNodeClient extends NodeClient implements RootNode {
 
-	private final RootNode wrapped;
+  private final RootNode wrapped;
 
-	RootNodeClient(RootNode wrapped) {
-		super(wrapped);
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  RootNodeClient(RootNode wrapped) {
+    super(wrapped);
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		this.wrapped = wrapped;
-	}
+    this.wrapped = wrapped;
+  }
 
-	@Override
-	public void addTreeListener(TreeListener treeListener) throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public void addTreeListener(TreeListener treeListener) throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		wrapped.addTreeListener(treeListener);
-	}
+    wrapped.addTreeListener(treeListener);
+  }
 
-	@Override
-	public void removeTreeListener(TreeListener treeListener) throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public void removeTreeListener(TreeListener treeListener) throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		wrapped.removeTreeListener(treeListener);
-	}
+    wrapped.removeTreeListener(treeListener);
+  }
 
-	@Override
-	public NodeSnapshot getSnapshot() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public NodeSnapshot getSnapshot() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		NodeSnapshot nodeSnapshot = wrapped.getSnapshot();
-		wrapSnapshot(nodeSnapshot);
-		return nodeSnapshot;
-	}
+    NodeSnapshot nodeSnapshot = wrapped.getSnapshot();
+    wrapSnapshot(nodeSnapshot);
+    return nodeSnapshot;
+  }
 
-	/**
-	 * Recursively wraps the nodes of the snapshot.
-	 */
-	private static void wrapSnapshot(NodeSnapshot snapshot) {
-		snapshot.setNode(NodeClient.wrap(snapshot.getNode()));
-		for(NodeSnapshot child : snapshot.getChildren()) {
-			wrapSnapshot(child);
-		}
-	}
+  /**
+   * Recursively wraps the nodes of the snapshot.
+   */
+  private static void wrapSnapshot(NodeSnapshot snapshot) {
+    snapshot.setNode(NodeClient.wrap(snapshot.getNode()));
+    for (NodeSnapshot child : snapshot.getChildren()) {
+      wrapSnapshot(child);
+    }
+  }
 }

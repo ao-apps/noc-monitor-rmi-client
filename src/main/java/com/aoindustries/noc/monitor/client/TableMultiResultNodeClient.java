@@ -35,40 +35,40 @@ import javax.swing.SwingUtilities;
  */
 public class TableMultiResultNodeClient<R extends TableMultiResult> extends NodeClient implements TableMultiResultNode<R> {
 
-	private final TableMultiResultNode<R> wrapped;
+  private final TableMultiResultNode<R> wrapped;
 
-	TableMultiResultNodeClient(TableMultiResultNode<R> wrapped) {
-		super(wrapped);
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  TableMultiResultNodeClient(TableMultiResultNode<R> wrapped) {
+    super(wrapped);
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		this.wrapped = wrapped;
-	}
+    this.wrapped = wrapped;
+  }
 
-	@Override
-	public void addTableMultiResultListener(TableMultiResultListener<? super R> tableMultiResultListener) throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public void addTableMultiResultListener(TableMultiResultListener<? super R> tableMultiResultListener) throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		wrapped.addTableMultiResultListener(tableMultiResultListener);
-	}
+    wrapped.addTableMultiResultListener(tableMultiResultListener);
+  }
 
-	@Override
-	public void removeTableMultiResultListener(TableMultiResultListener<? super R> tableMultiResultListener) throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public void removeTableMultiResultListener(TableMultiResultListener<? super R> tableMultiResultListener) throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		wrapped.removeTableMultiResultListener(tableMultiResultListener);
-	}
+    wrapped.removeTableMultiResultListener(tableMultiResultListener);
+  }
 
-	@Override
-	public List<?> getColumnHeaders() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public List<?> getColumnHeaders() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return wrapped.getColumnHeaders();
-	}
+    return wrapped.getColumnHeaders();
+  }
 
-	@Override
-	public List<? extends R> getResults() throws RemoteException {
-		assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
+  @Override
+  public List<? extends R> getResults() throws RemoteException {
+    assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 
-		return wrapped.getResults();
-	}
+    return wrapped.getResults();
+  }
 }

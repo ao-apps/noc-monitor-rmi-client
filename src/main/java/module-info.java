@@ -1,6 +1,6 @@
 /*
  * noc-monitor-rmi-client - RMI Client for Network Operations Center Monitoring.
- * Copyright (C) 2021  AO Industries, Inc.
+ * Copyright (C) 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -21,12 +21,12 @@
  * along with noc-monitor-rmi-client.  If not, see <https://www.gnu.org/licenses/>.
  */
 module com.aoindustries.noc.monitor.rmi.client {
-	exports com.aoindustries.noc.monitor.client;
-	// Direct
-	requires com.aoindustries.aoserv.client; // <groupId>com.aoindustries</groupId><artifactId>aoserv-client</artifactId>
-	requires com.aoindustries.noc.monitor.api; // <groupId>com.aoindustries</groupId><artifactId>noc-monitor-api</artifactId>
-	// Java SE
-	requires java.desktop;
-	requires java.rmi;
-	requires java.sql;
+  exports com.aoindustries.noc.monitor.client;
+  // Direct
+  requires com.aoindustries.aoserv.client; // <groupId>com.aoindustries</groupId><artifactId>aoserv-client</artifactId>
+  requires com.aoindustries.noc.monitor.api; // <groupId>com.aoindustries</groupId><artifactId>noc-monitor-api</artifactId>
+  // Java SE
+  requires java.desktop;
+  requires java.rmi;
+  requires java.sql;
 }
