@@ -74,16 +74,16 @@ public class NodeClient implements Node {
   @SuppressWarnings({"unchecked", "rawtypes"})
   static NodeClient wrap(Node node) {
     if (node instanceof SingleResultNode) {
-      return new SingleResultNodeClient((SingleResultNode)node);
+      return new SingleResultNodeClient((SingleResultNode) node);
     }
     if (node instanceof TableResultNode) {
-      return new TableResultNodeClient((TableResultNode)node);
+      return new TableResultNodeClient((TableResultNode) node);
     }
     if (node instanceof TableMultiResultNode) {
-      return new TableMultiResultNodeClient((TableMultiResultNode)node);
+      return new TableMultiResultNodeClient((TableMultiResultNode) node);
     }
     if (node instanceof RootNode) {
-      return new RootNodeClient((RootNode)node);
+      return new RootNodeClient((RootNode) node);
     }
     return new NodeClient(node);
   }
@@ -134,13 +134,13 @@ public class NodeClient implements Node {
     // Unwrap this
     Node thisNode = this;
     while (thisNode instanceof NodeClient) {
-      thisNode = ((NodeClient)thisNode).wrapped;
+      thisNode = ((NodeClient) thisNode).wrapped;
     }
 
     // Unwrap other
-    Node otherNode = (Node)obj;
+    Node otherNode = (Node) obj;
     while (otherNode instanceof NodeClient) {
-      otherNode = ((NodeClient)otherNode).wrapped;
+      otherNode = ((NodeClient) otherNode).wrapped;
     }
 
     // Check equals

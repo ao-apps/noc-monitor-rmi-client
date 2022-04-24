@@ -48,7 +48,7 @@ public class MonitorClient implements Monitor {
 
     // Setup RMI
     Registry registry = LocateRegistry.getRegistry(server, port, csf);
-    wrapped = (Monitor)registry.lookup("com.aoindustries.noc.monitor.server.MonitorServer");
+    wrapped = (Monitor) registry.lookup("com.aoindustries.noc.monitor.server.MonitorServer");
   }
 
   @Override
