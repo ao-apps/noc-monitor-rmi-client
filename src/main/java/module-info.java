@@ -29,4 +29,4 @@ module com.aoindustries.noc.monitor.rmi.client {
   requires java.desktop;
   requires java.rmi;
   requires java.sql;
-}
+} // TODO: Avoiding rewrite-maven-plugin-4.22.2 truncation
