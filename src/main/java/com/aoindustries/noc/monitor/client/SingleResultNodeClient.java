@@ -30,6 +30,8 @@ import java.rmi.RemoteException;
 import javax.swing.SwingUtilities;
 
 /**
+ * RMI client for {@link SingleResultNode}.
+ *
  * @author  AO Industries, Inc.
  */
 public class SingleResultNodeClient extends NodeClient implements SingleResultNode {

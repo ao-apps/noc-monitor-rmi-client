@@ -37,6 +37,8 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 /**
+ * RMI client for {@link Node}.
+ *
  * @author  AO Industries, Inc.
  */
 public class NodeClient implements Node {

@@ -30,6 +30,8 @@ import java.rmi.RemoteException;
 import javax.swing.SwingUtilities;
 
 /**
+ * RMI client for {@link RootNode}.
+ *
  * @author  AO Industries, Inc.
  */
 public class RootNodeClient extends NodeClient implements RootNode {

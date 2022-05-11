@@ -36,6 +36,8 @@ import java.util.Locale;
 import javax.swing.SwingUtilities;
 
 /**
+ * RMI client for {@link Monitor}.
+ *
  * @author  AO Industries, Inc.
  */
 // TODO: Implement serialization filters to prevent malicious loading of new classes
@@ -43,6 +45,9 @@ public class MonitorClient implements Monitor {
 
   private final Monitor wrapped;
 
+  /**
+   * Creates a new RMI client for {@link Monitor}.
+   */
   public MonitorClient(String server, int port, RMIClientSocketFactory csf) throws RemoteException, NotBoundException {
     assert !SwingUtilities.isEventDispatchThread() : "Running in Swing event dispatch thread";
 

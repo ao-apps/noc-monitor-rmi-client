@@ -31,6 +31,8 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 /**
+ * RMI client for {@link TableMultiResultNode}.
+ *
  * @author  AO Industries, Inc.
  */
 public class TableMultiResultNodeClient<R extends TableMultiResult> extends NodeClient implements TableMultiResultNode<R> {
