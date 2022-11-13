@@ -16,3 +16,6 @@ e4b2ddaf775c96381cce679d0ade3de5047ed691
 
 # Performed manual checkstyle clean-up
 85154bd558fee21f4a17b4f5483d93c5ad3bf16d
+
+# Added all whitespace-only commits to .git-blame-ignore-revs
+c911ca31240e66ba722d4fe70c459436b1cda071
